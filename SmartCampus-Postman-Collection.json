@@ -125,6 +125,27 @@
 			}
 		},
 		{
+			"name": "Part 2: Get One Room",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/rooms/LIB-301",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"rooms",
+						"LIB-301"
+					]
+				}
+			}
+		},
+		{
 			"name": "Part 3: Create Sensor in Room",
 			"request": {
 				"method": "POST",
@@ -193,6 +214,28 @@
 					"mode": "raw",
 					"raw": "{\n    \"value\": 25.8\n}"
 				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/sensors/TEMP-001/readings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"sensors",
+						"TEMP-001",
+						"readings"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 4: Get Sensor Readings History",
+			"request": {
+				"method": "GET",
+				"header": [],
 				"url": {
 					"raw": "http://localhost:8080/api/v1/sensors/TEMP-001/readings",
 					"protocol": "http",
