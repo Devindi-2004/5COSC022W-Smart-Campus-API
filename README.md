@@ -13,7 +13,7 @@ The "Smart Campus" API is a high-performance JAX-RS RESTful web service designed
 - Java Development Kit (JDK) 11 or higher installed and added to your system PATH.
 *(Note: A global Maven installation is not required as this project includes the Maven Wrapper).*
 
-**Step-by-step build and launch instructions (Option 2: Native Build):**
+**Step-by-step build and launch instructions (Option: Native Build):**
 1. Open a terminal or command prompt in the root directory of this project (where the `pom.xml` file is located).
 2. Clean previous builds and compile the Java source code by utilizing the included Maven Wrapper:
    - **On Windows:**
@@ -37,7 +37,7 @@ The "Smart Campus" API is a high-performance JAX-RS RESTful web service designed
 
 ---
 
-### 🔥 Easy to Use / Recommended (Option 1: Docker)
+### Easy to Use / Recommended (Option: Docker)
 If you do not want to install any Java runtime or configure paths, you can run this entire REST API using Docker.
 1. Ensure [Docker Desktop](https://www.docker.com/products/docker-desktop/) is running.
 2. In the terminal, build the container image:
