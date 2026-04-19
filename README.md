@@ -86,3 +86,16 @@ curl -X POST http://localhost:8080/api/v1/sensors/CO2-999/readings \
 ```
 
 ---
+
+## 4. Theory Questions & Report Answers
+
+**Q1: How does this Smart Campus API adhere to RESTful principles?**
+**Answer:** The API uses standard HTTP methods (`GET`, `POST`, `DELETE`) for CRUD operations, providing a uniform interface. Resources are managed using appropriate nouns (`/rooms`, `/sensors`) rather than verbs. The service is entirely stateless, where each request contains all context needed to execute the transaction, avoiding server-side session persistence. It also uses standard HTTP status codes (`200 OK`, `201 Created`, `409 Conflict`, `422 Unprocessable Entity`) to denote API behavior semantics. Additionally, the discovery endpoint implements HATEOAS by returning `_links` that point clients to available resources without prior knowledge of URL structures.
+
+**Q2: What is the role of JAX-RS (Jersey) and Maven in this project?**
+**Answer:** Maven acts as the build automation and dependency management tool. It automatically fetches the required external libraries defined in the `pom.xml` file, avoiding manually tracking JARs, while providing standardized commands (e.g. `mvn compile`). JAX-RS is the Java API specification for building REST Web Services, and Jersey is its official reference implementation. It allows us to easily declare REST endpoints through Java annotations (e.g., `@Path`, `@GET`, `@PathParam`, `@Produces`), automatically handling lower-level servlet mappings, JSON marshalling/unmarshalling, and HTTP request routing.
+
+**Q3: How are Error Handling and Logging implemented to meet enterprise standards?**
+**Answer:** We implemented separate layers for robustness:
+- Custom Exception Mapper classes (`ExceptionMapper<T>`) intercept specific Java business-logic RuntimeExceptions (`RoomNotEmptyException`, etc.) to dynamically translate them into precise JSON HTTP payload errors with exact status codes (`409`, `422`, `403`). A global catch-all `ExceptionMapper<Throwable>` prevents system stack traces from leaking via a flat `500 Server Error`.
+- Network observability was introduced using global Filters (`ContainerRequestFilter` and `ContainerResponseFilter`) acting as middleware to intercept and predictably print inbound URLs/Methods and outbound status codes.
