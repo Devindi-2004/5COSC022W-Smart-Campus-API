@@ -5,8 +5,11 @@ import uk.ac.westminster.smartcampus.model.Room;
 import uk.ac.westminster.smartcampus.repository.DataStore;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +25,7 @@ public class RoomResource {
     }
 
     @POST
-    public Response createRoom(Room room) {
+    public Response createRoom(Room room, @Context UriInfo uriInfo) {
         if (room == null || room.getId() == null) {
             return Response.status(Response.Status.BAD_REQUEST)
                            .entity("{\"error\": \"Room or Room ID cannot be empty\"}")
@@ -34,7 +37,9 @@ public class RoomResource {
                             .build();
         }
         DataStore.getRooms().put(room.getId(), room);
-        return Response.status(Response.Status.CREATED).entity(room).build();
+        
+        URI location = uriInfo.getAbsolutePathBuilder().path(room.getId()).build();
+        return Response.created(location).entity(room).build();
     }
 
     @GET

@@ -1,0 +1,364 @@
+{
+	"info": {
+		"name": "5COSC022W Smart Campus API Demonstration",
+		"description": "Postman collection for the Video Demonstration.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Part 1: Discovery Endpoint",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						""
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 2: Create Room (Active)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"LIB-301\",\n    \"name\": \"Library Quiet Study\",\n    \"capacity\": 50\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"rooms"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 2: Create Room (To Be Deleted)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"EMPTY-101\",\n    \"name\": \"Empty Room\",\n    \"capacity\": 10\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"rooms"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 2: Delete Empty Room (Success)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/rooms/EMPTY-101",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"rooms",
+						"EMPTY-101"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 2: Get All Rooms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/rooms",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"rooms"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 3: Create Sensor in Room",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"TEMP-001\",\n    \"type\": \"Temperature\",\n    \"status\": \"ACTIVE\",\n    \"currentValue\": 21.5,\n    \"roomId\": \"LIB-301\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/sensors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"sensors"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 3: Filter Sensors by Type",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/sensors?type=Temperature",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"sensors"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "Temperature"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 4: Post New Reading",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"value\": 25.8\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/sensors/TEMP-001/readings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"sensors",
+						"TEMP-001",
+						"readings"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 4: Verify Sensor Value Updated",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/sensors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"sensors"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 5: Error 409 (Delete Room with Sensors)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/rooms/LIB-301",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"rooms",
+						"LIB-301"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 5: Error 422 (Post Sensor to Fake Room)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"CO2-999\",\n    \"type\": \"CO2\",\n    \"status\": \"ACTIVE\",\n    \"currentValue\": 400.0,\n    \"roomId\": \"INVALID-ROOM-ID\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/sensors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"sensors"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 5: Create Maintenance Sensor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"MAINT-001\",\n    \"type\": \"Temperature\",\n    \"status\": \"MAINTENANCE\",\n    \"currentValue\": 20.0,\n    \"roomId\": \"LIB-301\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/sensors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"sensors"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 5: Error 403 (Readings on Maintenance Sensor)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"value\": 50.0\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/sensors/MAINT-001/readings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"sensors",
+						"MAINT-001",
+						"readings"
+					]
+				}
+			}
+		},
+		{
+			"name": "Part 5: Error 500 (Global Safety Net Test)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/error",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"error"
+					]
+				}
+			}
+		}
+	]
+}

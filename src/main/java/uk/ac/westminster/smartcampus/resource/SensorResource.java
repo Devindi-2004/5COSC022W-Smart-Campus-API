@@ -6,8 +6,11 @@ import uk.ac.westminster.smartcampus.model.Sensor;
 import uk.ac.westminster.smartcampus.repository.DataStore;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,7 +34,7 @@ public class SensorResource {
     }
 
     @POST
-    public Response createSensor(Sensor sensor) {
+    public Response createSensor(Sensor sensor, @Context UriInfo uriInfo) {
         if (sensor == null || sensor.getId() == null) {
             return Response.status(Response.Status.BAD_REQUEST)
                            .entity("{\"error\": \"Sensor or Sensor ID cannot be empty\"}")
@@ -56,7 +59,8 @@ public class SensorResource {
         DataStore.getSensors().put(sensor.getId(), sensor);
         DataStore.getSensorReadings().put(sensor.getId(), new ArrayList<>());
         
-        return Response.status(Response.Status.CREATED).entity(sensor).build();
+        URI location = uriInfo.getAbsolutePathBuilder().path(sensor.getId()).build();
+        return Response.created(location).entity(sensor).build();
     }
 
     // Sub-Resource locator for Sensor Readings

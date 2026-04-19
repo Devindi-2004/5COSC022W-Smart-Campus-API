@@ -26,4 +26,12 @@ public class DiscoveryResource {
         
         return Response.ok(discoveryData).build();
     }
+
+    @GET
+    @Path("error")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response triggerError() {
+        // Purposefully trigger a runtime exception to test the GlobalExceptionMapper (500 Error without stack trace)
+        throw new RuntimeException("Simulated unexpected server error");
+    }
 }

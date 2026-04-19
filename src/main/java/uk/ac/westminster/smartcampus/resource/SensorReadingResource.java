@@ -6,8 +6,11 @@ import uk.ac.westminster.smartcampus.model.SensorReading;
 import uk.ac.westminster.smartcampus.repository.DataStore;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +36,7 @@ public class SensorReadingResource {
     }
 
     @POST
-    public Response addReading(SensorReading reading) {
+    public Response addReading(SensorReading reading, @Context UriInfo uriInfo) {
         Sensor sensor = DataStore.getSensors().get(sensorId);
         if (sensor == null) {
             return Response.status(Response.Status.NOT_FOUND)
@@ -59,6 +62,7 @@ public class SensorReadingResource {
         
         DataStore.getSensorReadings().get(sensorId).add(reading);
         
-        return Response.status(Response.Status.CREATED).entity(reading).build();
+        URI location = uriInfo.getAbsolutePathBuilder().path(reading.getId()).build();
+        return Response.created(location).entity(reading).build();
     }
 }
