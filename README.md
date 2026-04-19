@@ -11,18 +11,28 @@ The "Smart Campus" API is a high-performance JAX-RS RESTful web service designed
 
 **Prerequisites:**
 - Java Development Kit (JDK) 11 or higher installed and added to your system PATH.
-- Apache Maven installed and added to your system PATH.
+*(Note: A global Maven installation is not required as this project includes the Maven Wrapper).*
 
 **Step-by-step build and launch instructions:**
 1. Open a terminal or command prompt in the root directory of this project (where the `pom.xml` file is located).
-2. Clean previous builds and compile the Java source code by executing:
-   ```bash
-   mvn clean compile
-   ```
+2. Clean previous builds and compile the Java source code by utilizing the included Maven Wrapper:
+   - **On Windows:**
+     ```bash
+     .\mvnw.cmd clean compile
+     ```
+   - **On Mac/Linux:**
+     ```bash
+     ./mvnw clean compile
+     ```
 3. Launch the embedded Grizzly HTTP container to proxy the JAX-RS application by executing:
-   ```bash
-   mvn exec:java
-   ```
+   - **On Windows:**
+     ```bash
+     .\mvnw.cmd exec:java
+     ```
+   - **On Mac/Linux:**
+     ```bash
+     ./mvnw exec:java
+     ```
 4. The server will initialize and start listening for connections on `http://localhost:8080/api/v1/`. Keep this terminal window open to keep the server alive. You can safely stop the API server at any time by pressing the `Enter` key in the terminal.
 
 ## 3. Sample cURL Commands
